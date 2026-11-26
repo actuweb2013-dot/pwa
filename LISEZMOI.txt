@@ -1,0 +1,33 @@
+MA PAIE, MON SOLDE — version PWA (application installable)
+
+Contenu
+  index.html            l'application
+  manifest.webmanifest  nom, icônes, couleurs de l'app installée
+  sw.js                 fonctionnement hors ligne
+  icons/                icônes de l'écran d'accueil
+
+Mettre l'app en ligne (une seule fois, gratuit)
+Une PWA doit être servie en HTTPS. Le plus simple :
+  1. Va sur https://app.netlify.com/drop
+  2. Glisse-dépose le dossier « ma-paie-pwa » (décompressé).
+  3. Netlify te donne une adresse https://xxxx.netlify.app : c'est ton app.
+  (GitHub Pages ou Cloudflare Pages fonctionnent aussi.)
+
+Installer sur ton téléphone
+  Android (Chrome) : ouvre l'adresse, touche « Installer » en haut de l'app,
+                     ou menu ⋮ > « Installer l'application ».
+  iPhone (Safari)  : ouvre l'adresse, touche Partager > « Sur l'écran d'accueil ».
+
+Tes données
+  Elles restent sur l'appareil, dans le navigateur : rien n'est envoyé sur internet.
+  Elles ne sont pas partagées avec la version dans Claude, ni entre téléphone et ordinateur.
+  Réglages > Sauvegarde : télécharge une sauvegarde régulièrement ; elle sert aussi
+  à transférer tes données d'un appareil à l'autre.
+
+Premier lancement
+  Réglages > Importer un export bancaire > « Tout le fichier » > choisis ton CSV,
+  puis Réglages > Récurrentes > « Rechercher » et ajoute tes prélèvements.
+
+Mise à jour
+  Remplace les fichiers en ligne par la nouvelle version : l'app la récupère
+  à la prochaine ouverture avec du réseau. Tes données sont conservées.
