@@ -327,8 +327,8 @@ function renderPeriode(){
     drawChart()}
   const envs=CATS.filter(c=>c!==HORS&&((+S().budgets[c]||0)>0||spent[c]>0)).sort((a,b)=>FIXED.includes(a)-FIXED.includes(b));
   $('#envs').innerHTML=envs.map(c=>{const b=+S().budgets[c]||0,s=spent[c],left=b-s,p=b?s/b:1;const col=p>=1?'var(--risk)':p>=.85?'var(--warn)':'var(--accent)';
-    return `<button class="card" data-c="${esc(c)}"><div class="t"><span>${esc(ic(c))}</span><span class="small mute">${E0(b)}</span></div><div class="r ${left<0?'risk':''}">${left<0?'−'+E0(-left).replace('-',''):E0(left)}</div><div class="s">${left<0?'dépassé':'restant'} · ${E0(s)} dépensés${upc[c]?` · ${E0(upc[c])} prélevés d'ici la paie`:''}</div><div class="track"><div class="fill" style="width:${Math.min(100,p*100)}%;background:${col}"></div></div></button>`}).join('')
-   +(spent[HORS]?`<button class="card" data-c="${esc(HORS)}"><div class="t"><span>${esc(ic(HORS))}</span><span class="small mute">hors budget</span></div><div class="r">${E0(spent[HORS])}</div><div class="s">à financer à part (épargne, prêt travaux)</div></button>`:'');
+    return `<button class="card" data-c="${esc(c)}"><div class="t"><span>${esc(ic(c))}</span><span class="small mute">dépensé</span></div><div class="r ${left<0?'risk':''}">${E(s)}</div><div class="s">sur ${E(b)} · ${left<0?`<span class="risk">dépassé de ${E(-left)}</span>`:`reste ${E(left)}`}${upc[c]?` · ${E(upc[c])} prélevés d'ici la paie`:''}</div><div class="track"><div class="fill" style="width:${Math.min(100,p*100)}%;background:${col}"></div></div></button>`}).join('')
+   +(spent[HORS]?`<button class="card" data-c="${esc(HORS)}"><div class="t"><span>${esc(ic(HORS))}</span><span class="small mute">hors budget</span></div><div class="r">${E(spent[HORS])}</div><div class="s">à financer à part (épargne, prêt travaux)</div></button>`:'');
   renderRecViz(st,en,t);
 }
 const fig=$('#fig');const svg=$('#chart');
@@ -382,7 +382,7 @@ function renderDetail(){if(!dtCat||!F)return;const c=dtCat;const b=+S().budgets[
   const recs=recState(F.st).filter(r=>r.t==='dep'&&r.c===c&&!r.done&&r.date);
   $('#dtBox').innerHTML=`<div class="row" style="justify-content:space-between;align-items:center"><h2 id="dtT" style="margin:0">${esc(ic(c))}</h2><button class="ghost mini" id="dtX">Fermer</button></div>
    <p class="small mute" style="margin:4px 0 0">${esc(pLabel(F.st))}</p>
-   <div class="kpis"><div class="kpi">Budget<b>${E0(b)}</b></div><div class="kpi">Dépensé<b>${E0(s)}</b></div><div class="kpi">${left<0?'Dépassement':'Restant'}<b class="${left<0?'risk':''}">${E0(Math.abs(left))}</b></div></div>
+   <div class="kpis"><div class="kpi">Dépensé<b>${E(s)}</b></div><div class="kpi">Budget<b>${E(b)}</b></div><div class="kpi">${left<0?'Dépassement':'Restant'}<b class="${left<0?'risk':''}">${E(Math.abs(left))}</b></div></div>
    ${c!==HORS?`<div class="track"><div class="fill" style="width:${Math.min(100,p*100)}%;background:${col}"></div></div>`:''}
    ${recs.length?`<h3 style="margin-top:16px">Prélèvements à venir</h3><ul class="tx">${recs.map(r=>`<li><span>${esc(r.l)}<div class="small mute">${esc(fmtD(r.date))}</div></span><b>−${E(r.a)}</b></li>`).join('')}</ul>`:''}
    <h3 style="margin-top:16px">${tx.length} transaction${tx.length>1?'s':''}</h3>
